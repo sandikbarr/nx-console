@@ -120,7 +120,15 @@ export async function verifyBuilderDefinition(
     validBuilder: true,
     builderName,
     configurations,
-    options: isNxWorkspace ? [...RUN_ONE_OPTIONS, ...options] : options,
+    options: isNxWorkspace
+      ? [
+          ...RUN_ONE_OPTIONS.filter(
+            (runOneOption) =>
+              !options.find((option) => option.name === runOneOption.name)
+          ),
+          ...options,
+        ]
+      : options,
   };
 }
 
